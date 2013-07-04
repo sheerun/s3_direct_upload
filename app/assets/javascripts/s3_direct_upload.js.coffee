@@ -84,7 +84,7 @@ $.fn.S3Uploader = (options) ->
 
         data.context.remove() if data.context && settings.remove_completed_progress_bar # remove progress bar
         $uploaderElement.trigger("s3_upload_complete", [content])
-        settings.success(content) if settings.success?
+        settings.success.apply($uploaderElement, [content]) if settings.success?
 
         current_files.splice($.inArray(data, current_files), 1) # remove that element from the array
         $uploaderElement.trigger("s3_uploads_complete", [content]) unless current_files.length
@@ -95,7 +95,7 @@ $.fn.S3Uploader = (options) ->
 
         data.context.remove() if data.context && settings.remove_failed_progress_bar # remove progress bar
         $uploaderElement.trigger("s3_upload_failed", [content])
-        settings.error(content) if settings.error?
+        settings.error.apply($uploaderElement, [content]) if settings.error?
 
       formData: (form) ->
         data = $('.s3upload_hidden_fields').serializeArray()
