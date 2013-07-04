@@ -59,6 +59,7 @@ $.fn.S3Uploader = (options) ->
 
       start: (e) ->
         $uploaderElement.trigger("s3_uploads_start", [e])
+        settings.start.apply($uploaderElement, [e]) if settings.start?
 
       progress: (e, data) ->
         if data.context
