@@ -105,8 +105,8 @@ $.fn.S3Uploader = (options) ->
           value: fileType
 
         # substitute upload timestamp and unique_id into key
-        key = data[1].value.replace('{timestamp}', new Date().getTime()).replace('{unique_id}', @files[0].unique_id)
-        data[1].value = settings.path + key
+        key = data[0].value.replace('{timestamp}', new Date().getTime()).replace('{unique_id}', @files[0].unique_id)
+        data[0].value = settings.path + key
         data
 
   build_content_object = ($uploaderElement, file, result) ->
