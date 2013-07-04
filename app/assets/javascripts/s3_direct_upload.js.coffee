@@ -12,6 +12,12 @@ $.fn.S3Uploader = (options) ->
 
     return this
 
+  iframeTransport = do ->
+    userAgent = navigator.userAgent.toLowerCase()
+    msie = /msie/.test( userAgent ) && !/opera/.test( userAgent )
+    msie_version = parseInt((userAgent.match( /.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/ ) || [])[1], 10)
+    msie && msie_version <= 9
+
   $uploaderElement = this
 
   settings =
@@ -34,6 +40,8 @@ $.fn.S3Uploader = (options) ->
 
   setUploadElement = ->
     $uploaderElement.fileupload
+      forceIframeTransport: iframeTransport
+
       url: settings.url if settings.url
 
       add: (e, data) ->
@@ -103,13 +111,14 @@ $.fn.S3Uploader = (options) ->
 
   build_content_object = ($uploaderElement, file, result) ->
     content = {}
-    if result # Use the S3 response to set the URL to avoid character encodings bugs
+    unless iframeTransport # Use the S3 response to set the URL to avoid character encodings bugs
       content.url      = $(result).find("Location").text()
       content.filepath = $('<a />').attr('href', content.url)[0].pathname
-    #else # IE <= 9 return a null result object so we use the file object instead
-      #domain           = $uploaderElement.attr('action')
-      #content.filepath = settings.path + $uploaderElement.find('input[name=key]').val().replace('/${filename}', '')
-      #content.url      = domain + content.filepath + '/' + encodeURIComponent(file.name)
+    else # IE <= 9 return a null result object so we use the file object instead
+      $form = $('form:last')
+      domain           = $form.attr('action')
+      content.filepath = settings.path + $form.find('input[name=key]').val().replace('/${filename}', '')
+      content.url      = domain + '/' + content.filepath + '/' + encodeURIComponent(file.name)
 
     content.filename   = file.name
     content.filesize   = file.size if 'size' of file
