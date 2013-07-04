@@ -45,6 +45,8 @@ $.fn.S3Uploader = (options) ->
       url: settings.url if settings.url
 
       add: (e, data) ->
+        settings.start.apply($uploaderElement, [e]) if settings.start?
+
         file = data.files[0]
         file.unique_id = Math.random().toString(36).substr(2,16)
 
@@ -59,7 +61,6 @@ $.fn.S3Uploader = (options) ->
 
       start: (e) ->
         $uploaderElement.trigger("s3_uploads_start", [e])
-        settings.start.apply($uploaderElement, [e]) if settings.start?
 
       progress: (e, data) ->
         if data.context
