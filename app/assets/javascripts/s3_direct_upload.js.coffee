@@ -112,7 +112,7 @@ $.fn.S3Uploader = (options) ->
   build_content_object = ($uploaderElement, file, result) ->
     content = {}
     unless iframeTransport # Use the S3 response to set the URL to avoid character encodings bugs
-      content.url      = $(result).find("Location").text()
+      content.url      = unescape($(result).find("Location").text())
       content.filepath = $('<a />').attr('href', content.url)[0].pathname
     else # IE <= 9 return a null result object so we use the file object instead
       $form = $('form:last')
