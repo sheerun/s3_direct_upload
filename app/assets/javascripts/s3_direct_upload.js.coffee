@@ -34,6 +34,8 @@ $.fn.S3Uploader = (options) ->
 
   setUploadElement = ->
     $uploaderElement.fileupload
+      forceIframeTransport: true,
+
       url: settings.url if settings.url
 
       add: (e, data) ->
