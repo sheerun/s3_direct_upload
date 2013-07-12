@@ -2,7 +2,7 @@
 
 Stand-alone file field for S3 Direct Upload working with Rails nested forms.
 
-Works as extension of [jQuery File Upload](http://blueimp.github.io/jQuery-File-Upload/) JavaScript plugin and supports IE 7-10.
+Works as an extension of [jQuery File Upload](http://blueimp.github.io/jQuery-File-Upload/) JavaScript plugin and supports IE 7-10.
 
 ## Installation
 
