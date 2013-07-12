@@ -1,6 +1,6 @@
 require "singleton"
 
-module S3DirectUpload
+module S3FileField
   class Config
     include Singleton
 
