@@ -1,27 +1,29 @@
-# S3FileField
+# S3 File Field
 
-Unobstructive S3 Direct Upload file field working even with Rails nested forms.
+Stand-alone file field for S3 Direct Upload working with Rails nested forms.
 
-Works as extension of [jQuery File Upload](http://blueimp.github.io/jQuery-File-Upload/) plugin.
+Works as extension of [jQuery File Upload](http://blueimp.github.io/jQuery-File-Upload/) JavaScript plugin.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 's3_direct_upload'
+```ruby
+gem 's3_direct_upload'
+```
 
 Then add a new initalizer with your AWS credentials:
 
 **config/initalizers/s3_file_field.rb**
 ```ruby
 S3FileField.config do |c|
-  c.access_key_id = ""       # your access key id
-  c.secret_access_key = ""   # your secret access key
-  c.bucket = ""              # your bucket name
+  c.access_key_id = ENV['AWS_ACCESS_KEY_ID']
+  c.secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
+  c.bucket = ENV['AWS_BUCKET']
 end
 ```
 
-Make sure your AWS S3 CORS settings for your bucket look something like this:
+Make sure your AWS S3 CORS Settings for your bucket look like this:
 ```xml
 <CORSConfiguration>
   <CORSRule>
