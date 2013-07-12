@@ -123,35 +123,7 @@ After successful upload, you'll find file data in `data.result` field:
 
 ## Cleaning old uploads on S3
 
-You may be processing the files upon upload and reuploading them to another
-bucket or directory. If so you can remove the originali files by running a
-rake task.
-
-First, add the fog gem to your `Gemfile` and run `bundle`:
-```ruby
-  require 'fog'
-```
-
-Then, run the rake task to delete uploads older than 2 days:
-```
-  $ rake s3_direct_upload:clean_remote_uploads
-  Deleted file with key: "uploads/20121210T2139Z_03846cb0329b6a8eba481ec689135701/06 - PCR_RYA014-25.jpg"
-  Deleted file with key: "uploads/20121210T2139Z_03846cb0329b6a8eba481ec689135701/05 - PCR_RYA014-24.jpg"
-  $
-```
-
-Optionally customize the prefix used for cleaning (default is `uploads/#{2.days.ago.strftime('%Y%m%d')}`):
-**config/initalizers/s3_direct_upload.rb**
-```ruby
-S3DirectUpload.config do |c|
-  # ...
-  c.prefix_to_clean = "my_path/#{1.week.ago.strftime('%y%m%d')}"
-end
-```
-
-Alternately, if you'd prefer for S3 to delete your old uploads automatically, you can do
-so by setting your bucket's 
-[Lifecycle Configuration](http://docs.aws.amazon.com/AmazonS3/latest/UG/LifecycleConfiguration.html).
+[Check out this article on Lifecycle Configuration](http://docs.aws.amazon.com/AmazonS3/latest/UG/LifecycleConfiguration.html).
 
 ## Thanks
 
